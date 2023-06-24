@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "116960679877",
+    "project_id": "omedia-30ec6",
+    "storage_bucket": "omedia-30ec6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116960679877:android:513798f80a2661227c1dac",
+        "android_client_info": {
+          "package_name": "com.example.o_rider"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnpQU2iUsZT_ACQKWLPPrrhGO8CYNrlQI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
