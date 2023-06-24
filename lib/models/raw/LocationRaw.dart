@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LocationRaw {
+  final String? id;
   final String? address;
   final String? campaign;
   final String? city;
@@ -8,8 +9,11 @@ class LocationRaw {
   final int? height;
   final int? width;
   final List<String>? files;
+  final num? long;
+  final num? lat;
 
   LocationRaw({
+    this.id,
     this.address,
     this.campaign,
     this.city,
@@ -17,6 +21,8 @@ class LocationRaw {
     this.height,
     this.width,
     this.files,
+    this.long,
+    this.lat,
   });
 
   factory LocationRaw.fromFirestore(
@@ -25,6 +31,7 @@ class LocationRaw {
   ) {
     final data = snapshot.data();
     return LocationRaw(
+      id: snapshot.id,
       address: data?['address'],
       campaign: data?['campaign'],
       city: data?['city'],
@@ -33,6 +40,8 @@ class LocationRaw {
       width: data?['width'],
       files:
           data?['files'] is Iterable ? List.from(data?['files']) : null,
+      long: data?['long'],
+      lat: data?['lat'],
     );
   }
 
@@ -45,6 +54,8 @@ class LocationRaw {
       if (height != null) "height": height,
       if (width != null) "width": width,
       if (files != null) "files": files,
+      if (long != null) "long": long,
+      if (lat != null) "lat": lat,
     };
   }
 }

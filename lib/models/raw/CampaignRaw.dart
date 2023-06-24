@@ -1,14 +1,16 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:o_rider/models/Brand.dart';
+import 'package:o_rider/models/raw/BrandRaw.dart';
 
 class CampaignRaw {
-  final Brand? brand;
+  final BrandRaw? brand;
+  final String? id;
   final String? from;
   final String? to;
   final String? status;
 
   CampaignRaw({
+    this.id,
     this.brand,
     this.from,
     this.to,
@@ -21,7 +23,8 @@ class CampaignRaw {
   ) {
     final data = snapshot.data();
     return CampaignRaw(
-      brand: Brand.fromFirestore(data?['brand'], options),
+      brand: BrandRaw.fromFirestore(data?['brand'], options),
+      id: snapshot.id,
       from: data?['from'],
       to: data?['to'],
       status: data?['status'],

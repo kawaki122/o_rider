@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskRaw {
+  final String? id;
   final String? campaign;
   final String? location;
   final String? status;
-  final bool? created;
+  final String? created;
 
   TaskRaw({
+    this.id,
     this.campaign,
     this.location,
     this.status,
@@ -19,6 +21,7 @@ class TaskRaw {
   ) {
     final data = snapshot.data();
     return TaskRaw(
+      id: snapshot.id,
       campaign: data?['campaign'],
       location: data?['location'],
       status: data?['status'],

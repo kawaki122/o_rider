@@ -39,6 +39,7 @@ dependencies:
   google_maps_flutter: ^2.2.8
   firebase_core: ^2.14.0
   cloud_firestore: ^4.8.1
+  scoped_model: ^2.0.0
 
 dev_dependencies:
   flutter_test:
