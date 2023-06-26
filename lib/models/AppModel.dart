@@ -7,6 +7,7 @@ class AppModel extends Model {
   final DataService _dataService = DataService();
   List<Task> tasks = [];
   bool loadingInitial = true;
+  int selectedTask = 0;
 
   AppModel() {
     loadInitialData();
@@ -16,6 +17,11 @@ class AppModel extends Model {
     tasks = await _dataService.fetchTasks();
     loadingInitial = false;
 
+    notifyListeners();
+  }
+
+  void selectTask(int task) {
+    this.selectedTask = task;
     notifyListeners();
   }
 }

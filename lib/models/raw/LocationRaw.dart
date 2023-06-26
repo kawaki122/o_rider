@@ -6,11 +6,12 @@ class LocationRaw {
   final String? campaign;
   final String? city;
   final String? traficFlow;
-  final int? height;
-  final int? width;
+  final String? height;
+  final String? width;
   final List<String>? files;
   final num? long;
   final num? lat;
+  final num? rating;
 
   LocationRaw({
     this.id,
@@ -23,6 +24,7 @@ class LocationRaw {
     this.files,
     this.long,
     this.lat,
+    this.rating,
   });
 
   factory LocationRaw.fromFirestore(
@@ -42,6 +44,7 @@ class LocationRaw {
           data?['files'] is Iterable ? List.from(data?['files']) : null,
       long: data?['long'],
       lat: data?['lat'],
+      rating: data?['rating'],
     );
   }
 
@@ -56,6 +59,7 @@ class LocationRaw {
       if (files != null) "files": files,
       if (long != null) "long": long,
       if (lat != null) "lat": lat,
+      if (rating != null) "rating": rating,
     };
   }
 }

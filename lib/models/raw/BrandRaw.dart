@@ -1,25 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BrandRaw {
-  final String? id;
   final String? name;
   final String? logo;
 
   BrandRaw({
-    this.id,
     this.name,
     this.logo,
   });
 
   factory BrandRaw.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    Map<String, dynamic> data,
     SnapshotOptions? options,
   ) {
-    final data = snapshot.data();
     return BrandRaw(
-      id: snapshot.id,
-      name: data?['name'],
-      logo: data?['logo'],
+      name: data['name'],
+      logo: data['logo'],
     );
   }
 

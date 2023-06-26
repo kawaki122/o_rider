@@ -7,8 +7,8 @@ import 'firebase_options.dart';
 
 void main() async {
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -18,17 +18,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'O Rider',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 167, 48, 39)),
-        useMaterial3: true,
-      ),
-      home: ScopedModel<AppModel>(
-        model: AppModel(),
-        child: const Home(),
+    return ScopedModel<AppModel>(
+      model: AppModel(),
+      child: MaterialApp(
+        title: 'O Rider',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color.fromARGB(255, 167, 48, 39)),
+          useMaterial3: true,
+        ),
+        home: const Home(),
       ),
     );
   }
 }
-
