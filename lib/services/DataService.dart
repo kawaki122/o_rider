@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:o_rider/models/Task.dart';
+import 'package:o_rider/models/FileModel.dart';
+import 'package:o_rider/models/TaskViewModel.dart';
 import 'package:o_rider/models/raw/CampaignRaw.dart';
 import 'package:o_rider/models/raw/LocationRaw.dart';
 import 'package:o_rider/models/raw/TaskRaw.dart';
@@ -21,18 +22,17 @@ class DataService {
             toFirestore: (TaskRaw city, _) => city.toFirestore(),
           );
 
-  DataService() {
-  }
+  DataService() {}
 
-  Future<List<Task>> fetchTasks() async {
+  Future<List<TaskViewModel>> fetchTasks() async {
     try {
       final result = await Future.wait([
         campaignsRef.get(),
         locationsRef.get(),
         tasksRef.get(),
       ]);
-      
-      List<Task> tasks = result[2].docs.map((element) {
+
+      List<TaskViewModel> tasks = result[2].docs.map((element) {
         final task = element.data() as TaskRaw;
 
         final location = result[1]
@@ -45,12 +45,18 @@ class DataService {
             .firstWhere((element) => element.id == task.campaign)
             .data() as CampaignRaw;
 
-        return Task(
+        return TaskViewModel(
           id: task.id!,
           address: location.address!,
           brandName: campaign.brand!.name!,
           brandLogo: campaign.brand!.logo!,
-          files: location.files!,
+          files: location.files!
+              .map((url) => FileModel(
+                    status: FileStatus.loaded,
+                    url: url,
+                    progress: 100,
+                  ))
+              .toList(),
           long: location.long,
           lat: location.lat,
           rating: location.rating!,

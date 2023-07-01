@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:image_network/image_network.dart';
-import '../models/Task.dart';
+import '../models/TaskViewModel.dart';
 
 class LocationCard extends StatelessWidget {
   const LocationCard({super.key, required this.onTap, required this.task});
   final void Function() onTap;
-  final Task task;
+  final TaskViewModel task;
 
   @override
   Widget build(BuildContext context) {
@@ -16,22 +15,20 @@ class LocationCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            Expanded(
+              flex: 1,
+              child: Container(
                 height: 120,
-                width: 160,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     bottomLeft: Radius.circular(10),
                   ),
-                  child: ImageNetwork(
-                    image: task.files.isNotEmpty ? task.files[0]:task.brandLogo,
-                    height: 120,
-                    width: 160,
-                  ),
+                  child: Image.network(task.files.isNotEmpty ? task.files[0].url:task.brandLogo, fit: BoxFit.cover,),
                 ),
-              ),
+              ),),
             Expanded(
+              flex: 2,
               child: ListTile(
                 title: Text(
                   task.brandName,

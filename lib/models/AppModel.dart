@@ -1,11 +1,14 @@
-
-import 'package:o_rider/models/Task.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:o_rider/models/FileModel.dart';
+import 'package:o_rider/models/TaskViewModel.dart';
 import 'package:o_rider/services/DataService.dart';
+import 'package:o_rider/services/StorageService.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class AppModel extends Model {
   final DataService _dataService = DataService();
-  List<Task> tasks = [];
+  final StorageService _storageService = StorageService();
+  List<TaskViewModel> tasks = [];
   bool loadingInitial = true;
   int selectedTask = 0;
 
@@ -21,7 +24,27 @@ class AppModel extends Model {
   }
 
   void selectTask(int task) {
-    this.selectedTask = task;
+    selectedTask = task;
     notifyListeners();
+  }
+
+  void loadLocation() {
+    tasks[selectedTask].loadLocation(() {
+      notifyListeners();
+    });
+  }
+
+  void uploadFile(XFile file, int fileIndex) {
+    tasks[selectedTask]
+        .files
+        .add(FileModel(status: FileStatus.uploading, url: "", progress: 0));
+    _storageService.uploadFile(file, (double progress) {
+      tasks[selectedTask].files[fileIndex].progress = progress;
+      notifyListeners();
+    }, (String url) {
+      tasks[selectedTask].files[fileIndex] =
+          FileModel(status: FileStatus.loaded, url: url, progress: 100);
+      notifyListeners();
+    }, () {});
   }
 }
