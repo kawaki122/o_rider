@@ -26,7 +26,7 @@ class ImageItem extends StatelessWidget {
         margin: const EdgeInsets.only(right: 10, left: 10, top: 10, bottom: 10),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Image.network(file.url, fit: BoxFit.cover,),
+          child: Image.network(file.thumb, fit: BoxFit.cover,),
         ),
       ),
     );

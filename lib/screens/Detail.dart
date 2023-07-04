@@ -50,6 +50,7 @@ class Detail extends StatelessWidget {
                                   children: [
                                     TextButton(
                                       onPressed: () async {
+                                        Navigator.of(context).pop();
                                         final ImagePicker picker =
                                             ImagePicker();
                                         final XFile? photo =
@@ -59,9 +60,8 @@ class Detail extends StatelessWidget {
                                                 // maxWidth: 500,
                                                 imageQuality: 50);
                                         if (photo != null) {
-                                          model.uploadFile(photo, index);
+                                          model.uploadFile(photo, index, 'image');
                                         }
-                                        Navigator.of(context).pop();
                                       },
                                       child: const Column(
                                         mainAxisAlignment:
@@ -87,6 +87,7 @@ class Detail extends StatelessWidget {
                                     ),
                                     TextButton(
                                       onPressed: () async {
+                                        Navigator.of(context).pop();
                                         final ImagePicker picker =
                                             ImagePicker();
                                         final XFile? video =
@@ -95,9 +96,8 @@ class Detail extends StatelessWidget {
                                           maxDuration: Duration(seconds: 10),
                                         );
                                         if (video != null) {
-                                          model.uploadFile(video, index);
+                                          model.uploadFile(video, index, 'video');
                                         }
-                                        Navigator.of(context).pop();
                                       },
                                       child: const Column(
                                         mainAxisAlignment:
@@ -121,7 +121,8 @@ class Detail extends StatelessWidget {
                           );
                         },
                       );
-                    } else if(task.files[index].status == FileStatus.uploading) {
+                    } else if (task.files[index].status ==
+                        FileStatus.uploading) {
                       return Uploading(file: task.files[index]);
                     }
                     return ImageItem(

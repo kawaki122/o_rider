@@ -51,9 +51,11 @@ class DataService {
           brandName: campaign.brand!.name!,
           brandLogo: campaign.brand!.logo!,
           files: location.files!
-              .map((url) => FileModel(
+              .map((file) => FileModel(
                     status: FileStatus.loaded,
-                    url: url,
+                    url: file.file!,
+                    thumb: file.thumb!,
+                    type: file.type!,
                     progress: 100,
                   ))
               .toList(),

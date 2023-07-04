@@ -34,16 +34,28 @@ class AppModel extends Model {
     });
   }
 
-  void uploadFile(XFile file, int fileIndex) {
-    tasks[selectedTask]
-        .files
-        .add(FileModel(status: FileStatus.uploading, url: "", progress: 0));
+  void uploadFile(XFile file, int fileIndex, String type) {
+    tasks[selectedTask].files.add(FileModel(
+          status: FileStatus.uploading,
+          url: "",
+          thumb: "",
+          type: type,
+          progress: 0,
+        ));
     _storageService.uploadFile(file, (double progress) {
       tasks[selectedTask].files[fileIndex].progress = progress;
       notifyListeners();
-    }, (String url) {
-      tasks[selectedTask].files[fileIndex] =
-          FileModel(status: FileStatus.loaded, url: url, progress: 100);
+    }, (String url) async {
+      String thumb = type == 'video'
+          ? await _storageService.generateThumbnailUrl(file)
+          : url;
+      tasks[selectedTask].files[fileIndex] = FileModel(
+        status: FileStatus.loaded,
+        url: url,
+        thumb: thumb,
+        type: type,
+        progress: 100,
+      );
       notifyListeners();
     }, () {});
   }

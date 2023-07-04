@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:o_rider/models/raw/FileRaw.dart';
 
 class LocationRaw {
   final String? id;
@@ -8,7 +9,7 @@ class LocationRaw {
   final String? traficFlow;
   final String? height;
   final String? width;
-  final List<String>? files;
+  final List<FileRaw>? files;
   final num? long;
   final num? lat;
   final num? rating;
@@ -40,8 +41,9 @@ class LocationRaw {
       traficFlow: data?['trafic_flow'],
       height: data?['height'],
       width: data?['width'],
-      files:
-          data?['files'] is Iterable ? List.from(data?['files']) : null,
+      files: (data?['files'] as List?)
+        ?.map((fileData) => FileRaw.fromFirestore(fileData, options))
+        .toList(),
       long: data?['long'],
       lat: data?['lat'],
       rating: data?['rating'],
@@ -56,7 +58,7 @@ class LocationRaw {
       if (traficFlow != null) "trafic_flow": traficFlow,
       if (height != null) "height": height,
       if (width != null) "width": width,
-      if (files != null) "files": files,
+      if (files != null) "files": files!.map((file) => file.toFirestore()).toList(),
       if (long != null) "long": long,
       if (lat != null) "lat": lat,
       if (rating != null) "rating": rating,
