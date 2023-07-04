@@ -11,10 +11,11 @@ class Media extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black38,
+        foregroundColor: Colors.white,
       ),
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
-      body: Center(child: file.type=='video'? VideoSection() :Image.asset('images/bilboard.jpg')),
+      body: Center(child: file.type=='video'? VideoSection(url: file.url,) :Image.asset('images/bilboard.jpg')),
     );
   }
 }

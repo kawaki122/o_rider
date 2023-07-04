@@ -24,7 +24,7 @@ class LocationCard extends StatelessWidget {
                     topLeft: Radius.circular(10),
                     bottomLeft: Radius.circular(10),
                   ),
-                  child: Image.network(task.files.isNotEmpty ? task.files[0].url:task.brandLogo, fit: BoxFit.cover,),
+                  child: Image.network(task.files.isNotEmpty ? task.files[0].thumb:task.brandLogo, fit: BoxFit.cover,),
                 ),
               ),),
             Expanded(

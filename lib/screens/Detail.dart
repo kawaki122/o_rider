@@ -8,6 +8,7 @@ import 'package:o_rider/components/Uploading.dart';
 import 'package:o_rider/models/AppModel.dart';
 import 'package:o_rider/models/FileModel.dart';
 import 'package:o_rider/models/TaskViewModel.dart';
+import 'package:o_rider/screens/Media.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class Detail extends StatelessWidget {
@@ -60,7 +61,8 @@ class Detail extends StatelessWidget {
                                                 // maxWidth: 500,
                                                 imageQuality: 50);
                                         if (photo != null) {
-                                          model.uploadFile(photo, index, 'image');
+                                          model.uploadFile(
+                                              photo, index, 'image');
                                         }
                                       },
                                       child: const Column(
@@ -96,7 +98,8 @@ class Detail extends StatelessWidget {
                                           maxDuration: Duration(seconds: 10),
                                         );
                                         if (video != null) {
-                                          model.uploadFile(video, index, 'video');
+                                          model.uploadFile(
+                                              video, index, 'video');
                                         }
                                       },
                                       child: const Column(
@@ -126,7 +129,16 @@ class Detail extends StatelessWidget {
                       return Uploading(file: task.files[index]);
                     }
                     return ImageItem(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Media(
+                              file: task.files[index],
+                            ),
+                          ),
+                        );
+                      },
                       file: task.files[index],
                     );
                   },
