@@ -17,4 +17,12 @@ class FileModel {
     required this.type,
     required this.progress,
   });
+
+    Map<String, dynamic> toFirestore() {
+    return {
+      "file": url,
+      "thumb": thumb,
+      "type": type,
+    };
+  }
 }

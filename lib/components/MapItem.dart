@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 class MapItem extends StatelessWidget {
-  const MapItem(
-      {super.key,
-      required this.onLocation,
-      required this.loading,
-      required this.loaded});
+  const MapItem({
+    super.key,
+    required this.onLocation,
+    required this.loading,
+    required this.loaded,
+    required this.locationExist,
+  });
   final void Function() onLocation;
   final bool loading;
   final bool loaded;
+  final bool locationExist;
 
   _renderAction() {
     if (loading) {
@@ -25,7 +28,11 @@ class MapItem extends StatelessWidget {
           ],
           borderRadius: BorderRadius.circular(30),
         ),
-        child: CircularProgressIndicator(),
+        child: Icon(
+          Icons.location_searching,
+          size: 40,
+          color: Colors.grey,
+        ),
       );
     } else if (loaded) {
       return Container(
@@ -48,7 +55,9 @@ class MapItem extends StatelessWidget {
       );
     } else {
       return GestureDetector(
-        onTap: onLocation,
+        onTap: () {
+          onLocation();
+        },
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -62,8 +71,9 @@ class MapItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
           ),
           child: Icon(
-            Icons.add,
+            locationExist ? Icons.cached : Icons.add,
             size: 60,
+            color: locationExist ? Colors.green : Colors.grey,
           ),
         ),
       );

@@ -59,9 +59,10 @@ class DataService {
                     progress: 100,
                   ))
               .toList(),
-          long: location.long,
-          lat: location.lat,
+          long: location.long!,
+          lat: location.lat!,
           rating: location.rating!,
+          status: task.status!,
         );
       }).toList();
 
@@ -70,5 +71,9 @@ class DataService {
       print(e);
       return [];
     }
+  }
+
+  Future<void> submitTask(TaskViewModel task) {
+    return tasksRef.doc(task.id).update(task.toFirestore());
   }
 }

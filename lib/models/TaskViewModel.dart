@@ -7,15 +7,17 @@ class TaskViewModel {
   String brandLogo;
   String address;
   List<FileModel> files;
-  num? long;
-  num? lat;
+  num long;
+  num lat;
   num rating;
+  String status;
   bool locationLoading = false;
   bool locationAdded = false;
+  bool submitting = false;
 
   void loadLocation(Function callback) {
     locationLoading = true;
-    callback();
+    callback('loading_true');
     determinePosition().then((location) {
       long = location.longitude;
       lat = location.altitude;
@@ -29,7 +31,7 @@ class TaskViewModel {
     }).catchError((e) {
       print(e);
       locationLoading = false;
-      callback();
+      callback('loading_false');
     });
   }
 
@@ -39,8 +41,18 @@ class TaskViewModel {
     required this.brandLogo,
     required this.address,
     required this.files,
-    this.long,
-    this.lat,
+    required this.long,
+    required this.lat,
     required this.rating,
+    required this.status,
   });
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      "files": files.map((file) => file.toFirestore()).toList(),
+      "long": long,
+      "lat": lat,
+      "status": 'PENDING',
+    };
+  }
 }

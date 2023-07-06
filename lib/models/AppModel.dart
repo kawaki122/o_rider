@@ -59,4 +59,16 @@ class AppModel extends Model {
       notifyListeners();
     }, () {});
   }
+
+  void handleSubmit() {
+    tasks[selectedTask].submitting = true;
+    notifyListeners();
+    _dataService.submitTask(tasks[selectedTask]).then((value) {
+      tasks[selectedTask].submitting = false;
+      notifyListeners();
+    }).catchError((e) {
+      tasks[selectedTask].submitting = false;
+      notifyListeners();
+    });
+  }
 }
