@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
 
 class MapItem extends StatelessWidget {
   const MapItem({
     super.key,
     required this.onLocation,
     required this.loading,
-    required this.loaded,
     required this.locationExist,
   });
-  final void Function() onLocation;
+  final void Function(Function) onLocation;
   final bool loading;
-  final bool loaded;
   final bool locationExist;
 
-  _renderAction() {
+  _renderAction(context) {
     if (loading) {
       return Container(
         padding: EdgeInsets.all(10),
@@ -34,29 +33,28 @@ class MapItem extends StatelessWidget {
           color: Colors.grey,
         ),
       );
-    } else if (loaded) {
-      return Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.5),
-              blurRadius: 6.0,
-              offset: Offset(0, 3),
-            ),
-          ],
-          borderRadius: BorderRadius.circular(40),
-        ),
-        child: Icon(
-          Icons.check_circle,
-          color: Colors.green,
-          size: 60,
-        ),
-      );
     } else {
       return GestureDetector(
         onTap: () {
-          onLocation();
+          onLocation((bool loading, bool error) {
+            if (loading) {
+              QuickAlert.show(
+                context: context,
+                barrierDismissible: false,
+                type: QuickAlertType.loading,
+                title: 'Loading',
+                text: 'Getting current location'
+              );
+            } else {
+              Navigator.pop(context);
+              QuickAlert.show(
+                context: context,
+                type: error ? QuickAlertType.error: QuickAlertType.success,
+                title: error ? 'Failed to get location':'Location loaded!',
+                autoCloseDuration: Duration(seconds: 3),
+              );
+            }
+          });
         },
         child: Container(
           decoration: BoxDecoration(
@@ -99,7 +97,7 @@ class MapItem extends StatelessWidget {
             ),
           ),
           Center(
-            child: _renderAction(),
+            child: _renderAction(context),
           ),
         ],
       ),

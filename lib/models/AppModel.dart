@@ -28,9 +28,10 @@ class AppModel extends Model {
     notifyListeners();
   }
 
-  void loadLocation() {
-    tasks[selectedTask].loadLocation(() {
+  void loadLocation(Function callback) {
+    tasks[selectedTask].loadLocation((bool loading, bool error) {
       notifyListeners();
+      callback(loading, error);
     });
   }
 
@@ -60,15 +61,19 @@ class AppModel extends Model {
     }, () {});
   }
 
-  void handleSubmit() {
-    tasks[selectedTask].submitting = true;
+  void handleSubmit(int index, Function callback) {
+    tasks[index].submitting = true;
     notifyListeners();
-    _dataService.submitTask(tasks[selectedTask]).then((value) {
-      tasks[selectedTask].submitting = false;
+    callback(true, false);
+    _dataService.submitTask(tasks[index]).then((value) {
+      tasks[index].submitting = false;
+      callback(false, false);
+      tasks.removeAt(index);
       notifyListeners();
     }).catchError((e) {
-      tasks[selectedTask].submitting = false;
+      tasks[index].submitting = false;
       notifyListeners();
+      callback(false, true);
     });
   }
 }

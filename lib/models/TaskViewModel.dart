@@ -12,26 +12,20 @@ class TaskViewModel {
   num rating;
   String status;
   bool locationLoading = false;
-  bool locationAdded = false;
   bool submitting = false;
 
   void loadLocation(Function callback) {
     locationLoading = true;
-    callback('loading_true');
+    callback(true, false);
     determinePosition().then((location) {
       long = location.longitude;
       lat = location.altitude;
       locationLoading = false;
-      locationAdded = true;
-      callback();
-      Future.delayed(const Duration(seconds: 2)).then((val) {
-        locationAdded = false;
-        callback();
-      });
+      callback(false, false);
     }).catchError((e) {
       print(e);
       locationLoading = false;
-      callback('loading_false');
+      callback(false, true);
     });
   }
 

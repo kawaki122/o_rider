@@ -3,6 +3,7 @@ import 'package:o_rider/components/BottomBar.dart';
 import 'package:o_rider/components/LocationCard.dart';
 import 'package:o_rider/models/AppModel.dart';
 import 'package:o_rider/screens/Detail.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class Home extends StatefulWidget {
@@ -13,7 +14,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<AppModel>(
@@ -29,13 +29,24 @@ class _HomeState extends State<Home> {
           padding: const EdgeInsets.all(10),
           itemCount: model.tasks.length,
           itemBuilder: (BuildContext context, int index) {
-            return LocationCard(task: model.tasks[index], onTap: () {
-              model.selectTask(index);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Detail()),
-              );
-            });
+            return LocationCard(
+                task: model.tasks[index],
+                onTap: () {
+                  model.selectTask(index);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Detail()),
+                  ).then((action) {
+                    if (action == 'action_added') {
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.success,
+                        title: 'Information Submitted',
+                        autoCloseDuration: Duration(seconds: 3),
+                      );
+                    }
+                  });
+                });
           },
         ),
         bottomNavigationBar: BottomBar(index: 0, onSelected: (index) {}),
