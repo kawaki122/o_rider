@@ -9,16 +9,16 @@ class AppModel extends Model {
   final DataService _dataService = DataService();
   final StorageService _storageService = StorageService();
   List<TaskViewModel> tasks = [];
-  bool loadingInitial = true;
+  String initialState = 'no_auth';
   int selectedTask = 0;
 
   AppModel() {
-    loadInitialData();
+    // loadInitialData();
   }
 
   void loadInitialData() async {
     tasks = await _dataService.fetchTasks();
-    loadingInitial = false;
+    initialState = 'loaded';
 
     notifyListeners();
   }

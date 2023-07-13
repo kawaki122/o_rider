@@ -15,7 +15,7 @@ class Media extends StatelessWidget {
       ),
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
-      body: Center(child: file.type=='video'? VideoSection(url: file.url,) :Image.asset('images/bilboard.jpg')),
+      body: Center(child: file.type=='video'? VideoSection(url: file.url,) :Image.network(file.url)),
     );
   }
 }

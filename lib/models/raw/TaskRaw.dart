@@ -6,6 +6,8 @@ class TaskRaw {
   final String? location;
   final String? status;
   final String? created;
+  final num? long;
+  final num? lat;
 
   TaskRaw({
     this.id,
@@ -13,6 +15,8 @@ class TaskRaw {
     this.location,
     this.status,
     this.created,
+    this.long,
+    this.lat,
   });
 
   factory TaskRaw.fromFirestore(
@@ -25,6 +29,8 @@ class TaskRaw {
       campaign: data?['campaign'],
       location: data?['location'],
       status: data?['status'],
+      long: data?['long'],
+      lat: data?['lat'],
       created: data?['created'],
     );
   }
@@ -34,6 +40,8 @@ class TaskRaw {
       if (campaign != null) "campaign": campaign,
       if (location != null) "location": location,
       if (status != null) "status": status,
+      if (long != null) "long": long,
+      if (lat != null) "lat": lat,
       if (created != null) "created": created,
     };
   }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:o_rider/models/AppModel.dart';
 import 'package:o_rider/screens/Home.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:o_rider/screens/Login.dart';
+import 'package:o_rider/screens/Splash.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'firebase_options.dart';
 
@@ -28,8 +30,20 @@ class MyApp extends StatelessWidget {
               seedColor: const Color.fromARGB(255, 167, 48, 39)),
           useMaterial3: true,
         ),
-        home: const Home(),
+        home: ScopedModelDescendant<AppModel>(
+      builder: (context, child, model) => _renderMain(model.initialState),
+        ),
       ),
     );
+  }
+}
+
+Widget _renderMain(String state) {
+  if(state == 'loading') {
+    return Splash();
+  } else if(state == 'no_auth') {
+    return Login();
+  } else {
+    return Home();
   }
 }

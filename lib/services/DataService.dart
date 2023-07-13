@@ -59,8 +59,8 @@ class DataService {
                     progress: 100,
                   ))
               .toList(),
-          long: location.long!,
-          lat: location.lat!,
+          long: task.long!,
+          lat: task.lat!,
           rating: location.rating!,
           status: task.status!,
         );

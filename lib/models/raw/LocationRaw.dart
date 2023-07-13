@@ -10,8 +10,6 @@ class LocationRaw {
   final String? height;
   final String? width;
   final List<FileRaw>? files;
-  final num? long;
-  final num? lat;
   final num? rating;
 
   LocationRaw({
@@ -23,8 +21,6 @@ class LocationRaw {
     this.height,
     this.width,
     this.files,
-    this.long,
-    this.lat,
     this.rating,
   });
 
@@ -44,8 +40,6 @@ class LocationRaw {
       files: (data?['files'] as List?)
         ?.map((fileData) => FileRaw.fromFirestore(fileData, options))
         .toList(),
-      long: data?['long'],
-      lat: data?['lat'],
       rating: data?['rating'],
     );
   }
@@ -59,8 +53,6 @@ class LocationRaw {
       if (height != null) "height": height,
       if (width != null) "width": width,
       if (files != null) "files": files!.map((file) => file.toFirestore()).toList(),
-      if (long != null) "long": long,
-      if (lat != null) "lat": lat,
       if (rating != null) "rating": rating,
     };
   }
